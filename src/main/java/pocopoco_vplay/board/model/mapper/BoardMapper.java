@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import org.apache.ibatis.session.RowBounds;
+
+import pocopoco_vplay.board.dto.response.MyTrashResponseDto;
 import pocopoco_vplay.board.model.vo.Content;
 import pocopoco_vplay.board.model.vo.Reply;
 
@@ -27,7 +29,7 @@ public interface BoardMapper {
 
 	ArrayList<Content> selectMyTrash(int userNo);
 
-	ArrayList<Content> selectCategoryMyTrash(@Param("menu") String menu, @Param("userNo") int userNo, @Param("sort") String sort);
+	ArrayList<MyTrashResponseDto> selectCategoryMyTrash(@Param("menu") String menu, @Param("userNo") int userNo, @Param("sort") String sort);
 
 	int insertInquiry(Content inquiry);
 

@@ -19,12 +19,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import pocopoco_vplay.board.exception.BoardException;
+import pocopoco_vplay.board.dto.request.MyTrashRequestDto;
+import pocopoco_vplay.board.dto.response.MyTrashResponseDto;
 import pocopoco_vplay.board.model.service.BoardService;
 import pocopoco_vplay.board.model.vo.Content;
 import pocopoco_vplay.board.model.vo.Reply;
-import pocopoco_vplay.commom.Pagination;
-import pocopoco_vplay.commom.model.vo.PageInfo;
+import pocopoco_vplay.global.common.pagination.PageInfo;
+import pocopoco_vplay.global.common.pagination.Pagination;
+import pocopoco_vplay.global.exception.BusinessException;
+import pocopoco_vplay.global.exception.ErrorCode;
 import pocopoco_vplay.users.exception.UsersException;
 import pocopoco_vplay.users.model.vo.Users;
 
@@ -253,18 +256,17 @@ public class BoardController {
 
 	@GetMapping("selectCategoryMyTrash")
 	@ResponseBody
-	public ArrayList<Content> selectCategoryMyTrash(@RequestParam("value") String menu, HttpSession session, @RequestParam("sortValue") String sort) {
+	public ArrayList<MyTrashResponseDto> selectCategoryMyTrash(HttpSession session , @ModelAttribute MyTrashRequestDto requestDto) {
 		Users loginUser = (Users) session.getAttribute("loginUser");
-		System.out.println(sort);
-		System.out.println(menu);
-		int userNo = loginUser.getUserNo();
-		ArrayList<Content> list = bService.selectCategoryMyTrash(menu, userNo, sort);
-		System.out.println("리스트는 " + list);
-		if (list != null) {
-			return list;
-		} else {
-			throw new UsersException("로그인 하셈");
+		if(loginUser == null){
+			throw new UsersException("로그인이 필요합니다.");
 		}
+
+		int userNo = loginUser.getUserNo();
+
+		ArrayList<MyTrashResponseDto> list = bService.selectCategoryMyTrash(requestDto.getValue(), userNo, requestDto.getSortValue());
+		
+		return (list == null) ? new ArrayList<>() : list;
 	}
 
 //	@GetMapping("request_list")
@@ -423,7 +425,7 @@ public class BoardController {
 			int contentNo = content.getContentNo();
 			return "redirect:/board/" + contentNo + "/" + page;
 		} else {
-			throw new BoardException("제작 의뢰 게시글 작성 실패");
+			throw new BusinessException(ErrorCode.BOARD_NOT_FOUND);
 		}
 	}
 
@@ -447,7 +449,7 @@ public class BoardController {
 			mv.addObject("page", page).setViewName("request_detail");
 			return mv;
 		} else {
-			throw new BoardException("의뢰 게시글 상세조회를 실패했습니다.");
+			throw new BusinessException(ErrorCode.BOARD_NOT_FOUND);
 		}
 	}
 
@@ -499,7 +501,7 @@ public class BoardController {
 		Content content = bService.selectRequest(bId, id);
 
 		if (content == null) {
-			throw new BoardException("해당 게시글을 찾을 수 없습니다.");
+			throw new BusinessException(ErrorCode.BOARD_NOT_FOUND);
 		}
 
 		model.addAttribute("c", content).addAttribute("page", page);
@@ -515,7 +517,7 @@ public class BoardController {
 			// return "redirect:/board/"+c.getContentNo()+ "/"+ page;
 			return String.format("redirect:/board/%d/%d", c.getContentNo(), page);
 		} else {
-			throw new BoardException("게시글 수정을 실패하였습니다.");
+			throw new BusinessException(ErrorCode.BOARD_NOT_FOUND);
 		}
 	}
 
@@ -528,7 +530,7 @@ public class BoardController {
 			if (result > 0) {
 				return "redirect:/board/request_list";
 			} else {
-				throw new BoardException("게시글 삭제를 실패했습니다.");
+				throw new BusinessException(ErrorCode.BOARD_NOT_FOUND);
 			}
 		}
 	}
@@ -547,7 +549,7 @@ public class BoardController {
 			return "redirect:/board/" + contentNo + "/" + currentPage;
 
 		} else {
-			throw new BoardException("댓글 등록에 실패하였습니다.");
+			throw new BusinessException(ErrorCode.BOARD_NOT_FOUND);
 		}
 
 	}

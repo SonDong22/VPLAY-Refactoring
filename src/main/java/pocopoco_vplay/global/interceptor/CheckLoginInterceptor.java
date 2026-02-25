@@ -1,4 +1,4 @@
-package pocopoco_vplay.commom.intercepter;
+package pocopoco_vplay.global.interceptor;
 
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,7 +8,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import pocopoco_vplay.users.model.vo.Users;
 
 //로그인 검사
-public class CheckLoginIntercepter implements HandlerInterceptor {
+public class CheckLoginInterceptor implements HandlerInterceptor {
+
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

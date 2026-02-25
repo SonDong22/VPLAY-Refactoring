@@ -1,4 +1,4 @@
-package pocopoco_vplay.commom.config;
+package pocopoco_vplay.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 
 @Configuration
-public class Mailconfig {
+public class MailConfig {
 
     @Bean
     public JavaMailSender javaMailSender() {

@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import pocopoco_vplay.admin.model.mapper.AdminMapper;
 import pocopoco_vplay.board.model.vo.Content;
 import pocopoco_vplay.board.model.vo.Reply;
-import pocopoco_vplay.commom.model.vo.PageInfo;
+import pocopoco_vplay.global.common.pagination.PageInfo;
 import pocopoco_vplay.users.model.vo.Users;
 
 @Service

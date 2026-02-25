@@ -1,4 +1,4 @@
-package pocopoco_vplay.commom;
+package pocopoco_vplay.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

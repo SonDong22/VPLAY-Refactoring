@@ -9,10 +9,11 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import pocopoco_vplay.board.dto.response.MyTrashResponseDto;
 import pocopoco_vplay.board.model.mapper.BoardMapper;
 import pocopoco_vplay.board.model.vo.Content;
 import pocopoco_vplay.board.model.vo.Reply;
-import pocopoco_vplay.commom.model.vo.PageInfo;
+import pocopoco_vplay.global.common.pagination.PageInfo;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +45,7 @@ public class BoardService {
 		return mapper.selectMyTrash(userNo);
 	}
 
-	public ArrayList<Content> selectCategoryMyTrash(String menu, int userNo, String sort) {
+	public ArrayList<MyTrashResponseDto> selectCategoryMyTrash(String menu, int userNo, String sort) {
 		return mapper.selectCategoryMyTrash(menu, userNo, sort);
 	}
 

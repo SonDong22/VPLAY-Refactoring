@@ -1,4 +1,4 @@
-package pocopoco_vplay.commom.model.vo;
+package pocopoco_vplay.global.common.pagination;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
