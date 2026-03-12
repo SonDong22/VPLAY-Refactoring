@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 import org.apache.ibatis.session.RowBounds;
 
 import pocopoco_vplay.board.dto.response.MyTrashResponseDto;
@@ -95,4 +94,6 @@ public interface BoardMapper {
 	ArrayList<Content> selectRequestList(Content content);
 
 	List<Content> searchRequest(Map<String, Object> searchValue);
+
+	int restoreTrash(@Param("contentNo") int contentNo , @Param("userNo") int userNo);
 }

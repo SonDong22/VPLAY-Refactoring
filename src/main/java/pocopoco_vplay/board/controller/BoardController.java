@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import pocopoco_vplay.board.dto.request.MyTrashRequestDto;
+import pocopoco_vplay.board.dto.request.TrashRestoreRequestDto;
 import pocopoco_vplay.board.dto.response.MyTrashResponseDto;
+import pocopoco_vplay.board.dto.response.TrashRestoreResponseDto;
 import pocopoco_vplay.board.model.service.BoardService;
 import pocopoco_vplay.board.model.vo.Content;
 import pocopoco_vplay.board.model.vo.Reply;
@@ -564,6 +567,21 @@ public class BoardController {
 	@ResponseBody
 	public int deleteReply(@RequestParam("replyNo") int replyNo) {
 		return bService.deleteReply(replyNo);
+	}
+	@PostMapping("restoreTrash")
+	@ResponseBody
+	public TrashRestoreResponseDto restoreTrash(HttpSession session, @RequestBody TrashRestoreRequestDto requestDto){
+		Users loginUser = (Users)session.getAttribute("loginUser");
+		if(loginUser == null){
+			throw new UsersException("로그인 실패");
+		}
+		int result = bService.restoreTrash(requestDto.getContentNo(),loginUser.getUserNo());
+		if(result > 0){
+			return new TrashRestoreResponseDto(true,"복원에 성공하였습니다.");
+		}else{
+			throw new UsersException("복원에 실패하였습니다.");
+		}
+		
 	}
 	
 	

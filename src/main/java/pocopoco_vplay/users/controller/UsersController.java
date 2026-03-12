@@ -127,7 +127,7 @@ public class UsersController {
 			//그 과정에서 스는 함수들이 toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); 얘네들인데
 			// toInstant() 얘는  Timestamp를 Instant(UTC기준)으로 변환해주고, localDate는 시간정보를 포함하지않는 ㅄ 데이터형이라 atZone(ZoneId.systemDefault())얘를 써줘서 
 			// 현재 시스템의 기본날짜로 세팅해준 후 , toLocalDateTime()을 이용해서 최종적으로 LocalDateTime 객체로 변환해주는 삼단계가 필요함
-			//생각보다 30일날짜만 더하는건데 녹록치않음 ㅅㅂ;
+			//생각보다 30일날짜만 더하는건데 녹록치않음
 			Timestamp loginUserPaymentDate = (Timestamp) uService.getPaymentDate(loginUser);
 			if(loginUserPaymentDate == null) {
 				

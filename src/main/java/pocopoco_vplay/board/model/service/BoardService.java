@@ -186,4 +186,7 @@ public class BoardService {
 		return mapper.searchRequest(searchValue);
 	}
 
+	public int restoreTrash(int contentNo, int userNo){
+		return mapper.restoreTrash(contentNo,userNo);
+	}
 }

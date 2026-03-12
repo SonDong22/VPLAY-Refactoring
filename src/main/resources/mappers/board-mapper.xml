@@ -440,4 +440,13 @@
 		WHERE content_title LIKE CONCAT(CONCAT('%', #{searchvalue}), '%') and board_type = 2 and CONTENT_STATUS = 'Y';
 		</if>
 	</select>
+
+	<update id="restoreTrash">
+		update content
+		set content_status = 'Y',
+			delete_status = 'Y',
+			modify_date = sysdate
+		where content_no = #{contentNo} and user_no = #{userNo} and content_status = 'N'
+	</update>
+
 </mapper>
